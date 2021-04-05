@@ -1,0 +1,112 @@
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<!--*/-->
+<head>
+
+    <div th:replace="_base"></div>
+
+    <title>Выданные книги</title>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Главная</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Действия
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/">Список книг</a>
+                    <a class="dropdown-item" href="/reader/readerList">Список читателей</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/issueBook/issuedList">Выданные книги</a>
+                </div>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container" align="center">
+    <div class="my-4">
+        <h1>Список выданных книг</h1>
+<!--        <button type="button" id="addButton"-->
+<!--                class="btn btn-secondary" onclick="location.href='/newBook'">-->
+<!--            <i class="fas fa-plus"></i>-->
+<!--            <span class="ml-1">Добавить Новую Книгу</span>-->
+<!--        </button>-->
+    </div>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Название</th>
+            <th>Автор</th>
+            <th>Читатель</th>
+            <th>Контактный телефон</th>
+            <th>Дата выдачи</th>
+            <th>Просрочено</th>
+            <th style="width: 50px;"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="bookReader : ${bookReaders}">
+            <td th:text="${bookReader.book.name}">Название</td>
+            <td th:text="${bookReader.book.author.fio}">Автор</td>
+            <td th:text="${bookReader.reader.fio}">Читатель</td>
+            <td th:text="${bookReader.reader.phone}">Контактный телефон</td>
+            <td th:text="${bookReader.createdOn}">Дата выдачи</td>
+            <td th:text="${bookReader.overdue ? 'Да':'Нет'}">Просрочено</td>
+            <td class="d-flex justify-content-between">
+                <form action="#" th:action="@{/issueBook/delete}" th:object="${bookReader}" method="post">
+                    <input type="hidden" name="idBook" th:value="${bookReader.book.id}" />
+                    <input type="hidden" name="idReader" th:value="${bookReader.reader.id}" />
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-share-square"></i>
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <hr/>
+
+    <ul class="pagination" th:if="${bookReaders.totalPages > 0}">
+        <li class="page-item" th:if="${activePage != 0 && bookReaders.totalPages > 1}">
+            <a th:href="@{/issueBook/issuedList/(page=${activePage - 1})}" class="page-link">Предыдущая</a>
+        </li>
+
+        <th:block th:each="i:${#numbers.sequence(0, (bookReaders.totalPages)-1)}">
+            <li class="page-item active" th:if="${i == activePage}">
+                <a th:href="@{/issueBook/issuedList/(page=${i})}" th:text="${i+1}" class="page-link"></a>
+            </li>
+
+            <li class="page-item" th:if="${i != activePage}">
+                <a th:href="@{/issueBook/issuedList/(page=${i})}" th:text="${i+1}" class="page-link"></a>
+            </li>
+        </th:block>
+
+        <li class="page-item" th:if="${activePage != bookReaders.totalPages - 1 && bookReaders.totalPages >= 3}">
+            <a th:href="@{/issueBook/issuedList/(page=${activePage + 1})}" class="page-link">Следующая</a>
+        </li>
+    </ul>
+</div>
+
+
+
+</body>
+</html>

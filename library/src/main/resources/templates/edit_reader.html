@@ -1,0 +1,53 @@
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="_base"></div>
+
+    <title>Редактирование книги</title>
+
+</head>
+<body>
+<div align="center">
+    <h1 class="mt-5">Редактировать Читателя</h1>
+
+    <form action="#" th:action="@{/reader/newReader}" th:object="${reader}" method="post">
+        <div class="card col-md-6 mt-5 offset-md-0 card-body-padding">
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6 col-12"><label>ИД</label></div>
+                        <div class="col-md-6 col-12"><input type="text" th:field="*{id}" readonly="readonly" class="form-control"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6 col-12"><label>ФИО</label></div>
+                        <div class="col-md-6 col-12"><input type="text" th:field="*{fio}" class="form-control"></div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6 col-12"><label>Телефон</label></div>
+                        <div class="col-md-6 col-12"><input type="text" th:field="*{phone}" class="form-control"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6 col-12"><label>Почта</label></div>
+                        <div class="col-md-6 col-12"><input type="email" th:field="*{email}" class="form-control"></div>
+                    </div>
+                </div>
+
+                <div class="form-group pt-3 flex-align-right">
+                    <button type="submit" class="btn btn-primary col-md-4 col-12">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

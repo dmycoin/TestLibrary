@@ -1,0 +1,109 @@
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<!--*/-->
+<head>
+
+    <div th:replace="_base"></div>
+
+    <title>Новая книга</title>
+</head>
+<body>
+<div align="center">
+    <h1 class="mt-4">Добавить Новую Книгу</h1>
+
+    <form action="#" th:action="@{/save}" method="post">
+
+        <div class="card col-md-6 mt-5 offset-md-0 card-body-padding">
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6 col-12"><label>Название книги</label></div>
+                        <div class="col-md-6 col-12"><input name="name" type="text" class="form-control"></div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6 col-12"><label>Число страниц</label></div>
+                        <div class="col-md-6 col-12"><input name="pageCount" type="number" class="form-control"></div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6 col-12"><label>Год издания</label></div>
+                        <div class="col-md-6 col-12"><input name="publishYear"  type="number" class="form-control"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6 col-12"><label>Кол-во</label></div>
+                        <div class="col-md-6 col-12"><input name="count" type="number" class="form-control"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <label>Издательство</label>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <select name="publisher" class="form-control">
+                                <option th:each="p : ${publishers}"
+                                        th:value="${p.id}"
+                                        th:text="${p.name}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <label>Жанр</label>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <select name="genre" class="form-control">
+                                <option th:each="genre : ${genres}"
+                                        th:value="${genre.id}"
+                                        th:text="${genre.name}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <label>Автор</label>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <select name="author" class="form-control">
+                                <option th:each="author : ${authors}"
+                                        th:value="${author.id}"
+                                        th:text="${author.fio}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group pt-3 flex-align-right">
+                    <button type="submit" class="btn btn-primary col-md-4 col-12">
+                        <i class="fas fa-plus"></i><span class="ml-1">Сохранить</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+</body>
+</html>
